@@ -34,11 +34,11 @@ class Loopy:
 
 @pytest.fixture
 def pages():
-    data1 = {"name": "first"}, {"name": "second"}
-    page1 = {"page": 1, "next": 2, "data": [data1]}
+    data1 = [{"name": "first"}, {"name": "second"}]
+    page1 = {"page": 1, "next": 2, "data": data1}
 
-    data2 = {"name": "third"}, {"name": "fourth"}
-    page2 = {"page": 2, "next": None, "data": [data2]}
+    data2 = [{"name": "third"}, {"name": "fourth"}]
+    page2 = {"page": 2, "next": None, "data": data2}
     return [
         page1,
         page2,
