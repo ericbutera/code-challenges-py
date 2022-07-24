@@ -13,10 +13,14 @@ class Solution:
     STARTS = ["[", "{", "("]
     ENDS = ["]", "}", ")"]
 
-    stack: list[str] = []
+    stack: list[str]
 
     def isValid(self, s: str) -> bool:
         # print(f"parsing `{s}`")
+
+        # reset stack per run; would be better not to be a class prop
+        self.stack = []
+
         for char in s:
             if not self.parse_char(char):
                 return False
@@ -36,6 +40,9 @@ class Solution:
             return True
 
         if char in self.ENDS:
+            if len(self.stack) == 0:
+                return False  # not enough stack to close
+
             last = self.stack.pop()
             inverse = self.INVERSE[char]
             if last == inverse:
