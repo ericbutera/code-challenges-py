@@ -1,5 +1,5 @@
 import pytest
-from learn.leetcode.two_sum import Solution
+from leetcode.two_sum import Solution
 
 
 examples = [
