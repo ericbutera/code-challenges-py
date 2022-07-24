@@ -16,7 +16,7 @@ class TestConnector:
         }
 
     @pytest.fixture()
-    def s3_service_with_buckets(self, buckets):
+    def s3_buckets(self, buckets):
         with mock.patch("learn.connector.Boto.get_client") as mock_client:
             mock_client.return_value.get_buckets.return_value = buckets
             yield mock_client
@@ -26,8 +26,9 @@ class TestConnector:
         with mock.patch.object(Connector, "get_client") as mock_client:
             yield mock_client
 
-    def test_scan_bucket_fetches_buckets(self, s3_service_with_buckets, buckets):
-        # this bit of "much too clever" code will wire up get_buckets inside `s3_service_with_buckets`
+    def test_scan_bucket_fetches_buckets(self, s3_buckets, buckets):
+        # this bit of "much too clever" code will wire up get_buckets
+        # inside `s3_buckets`
         connector = Connector()
         found = connector.run()
         assert buckets == found
@@ -97,17 +98,8 @@ class TestConnectorWithClient:
         assert len(connector._findings) == 2
 
     def test_patch_context(self, buckets):
-        with mock.patch(
-            "learn.connector.ConnectorWithClient.fetch_buckets", return_value=buckets
-        ):
-            connector = ConnectorWithClient()
-            connector.run()
-            assert len(connector._findings) == 2
-
-    def test_patch_object_context(self, buckets):
-        with mock.patch.object(
-            ConnectorWithClient, "fetch_buckets", return_value=buckets
-        ):
+        label = "learn.connector.ConnectorWithClient.fetch_buckets"
+        with mock.patch(label, return_value=buckets):
             connector = ConnectorWithClient()
             connector.run()
             assert len(connector._findings) == 2

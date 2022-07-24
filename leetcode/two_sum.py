@@ -3,7 +3,8 @@ from typing import List
 
 
 class Solution:
-    """Given nums, an array of ints and target, return indicies of the two numbers such that they add up to target.
+    """Given nums, an array of ints and target, return indices of the two
+    numbers such that they add up to target.
 
     Assume only one solution exists.
     Do not reuse elements.
@@ -65,7 +66,8 @@ class Solution:
 SCRATCH = """
 Concerns:
 - what if less than two elements given?
-    - can't happen, there's always a solution AND constraints call out nums.length BETWEEN 2 && 10^4 (100,000)
+    - can't happen, there's always a solution AND constraints call out
+      nums.length BETWEEN 2 && 10^4 (100,000)
 
 nums = [2,7,11,15]
 target = 9

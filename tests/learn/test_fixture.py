@@ -75,7 +75,9 @@ class Aws:
             emitter.emit(RawScanData(type=self.TYPE, data=self.fetch()))
 
         def fetch(self):
-            return {"Reservations": [{"Instances": [{"InstanceId": "i-12345"}]}]}
+            instance = {"InstanceId": "i-12345"}
+            reservation = {"Instances": [instance]}
+            return {"Reservations": [reservation]}
 
     class Suite(ScannerSuite):
         pass

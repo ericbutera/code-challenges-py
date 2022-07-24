@@ -1,4 +1,3 @@
-from typing import Dict
 from unittest import mock
 
 import pytest
@@ -9,7 +8,8 @@ class Loopy:
 
     In Ruby this can be done with a lazy iterator utilizing yield.
 
-    This approach allows clients to easily iterate very large data sets without Out Of Memory errors. It also hides the "complexity" of pagination.
+    This approach allows clients to easily iterate very large data sets
+    without Out Of Memory errors. It also hides the "complexity" of pagination.
     """
 
     def get_all(self, per_page=100):
@@ -34,9 +34,14 @@ class Loopy:
 
 @pytest.fixture
 def pages():
+    data1 = {"name": "first"}, {"name": "second"}
+    page1 = {"page": 1, "next": 2, "data": [data1]}
+
+    data2 = {"name": "third"}, {"name": "fourth"}
+    page2 = {"page": 2, "next": None, "data": [data2]}
     return [
-        {"page": 1, "next": 2, "data": [{"name": "first"}, {"name": "second"}]},
-        {"page": 2, "next": None, "data": [{"name": "third"}, {"name": "fourth"}]},
+        page1,
+        page2,
     ]
 
 
@@ -58,7 +63,8 @@ def test_all_returns_everything(mock_page, pages):
 
 
 # TODO is there a way to use fixtures in patches?
-# it'd be cool to pass in a fixture which can auto-wire the return using another fixture
+# it'd be cool to pass in a fixture which can auto-wire
+# the return using another fixture
 @mock.patch.object(Loopy, "_get_page")
 def test_iterator_yields_items(mock_page, pages):
     loopy = Loopy()

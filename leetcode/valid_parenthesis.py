@@ -25,7 +25,8 @@ class Solution:
             # print(f"error: found {len(self.stack)} unclosed expressions")
             return False
 
-        # TODO i don't like an implicit pass, find a way to invert so it fails unless explicitly allowed
+        # TODO i don't like an implicit pass, find a way to invert so it
+        # fails unless explicitly allowed
         return True
 
     def parse_char(self, char: str) -> bool:
@@ -40,7 +41,7 @@ class Solution:
             if last == inverse:
                 return True
 
-            # print(f"error: unexpected char {char} detected. expected {inverse}")
+            # print(f"error: found {char}; expected {inverse}")
 
         return False
 
